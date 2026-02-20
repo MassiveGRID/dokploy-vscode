@@ -1,0 +1,344 @@
+{
+   "name": "dokploy-vscode",
+   "displayName": "Dokploy - Deploy & Manage",
+   "description": "Deploy your code to Dokploy servers directly from VS Code. Create services, manage deployments, view logs, and configure domains.",
+   "version": "1.0.0",
+   "publisher": "MassiveGRID",
+   "license": "MIT",
+   "engines": {
+      "vscode": "^1.109.0"
+   },
+   "categories": [
+      "Other",
+      "Deployment"
+   ],
+   "keywords": [
+      "dokploy",
+      "deploy",
+      "hosting",
+      "self-hosted",
+      "docker",
+      "docker-compose",
+      "paas"
+   ],
+   "icon": "media/icon.png",
+   "repository": {
+      "type": "git",
+      "url": "https://github.com/Massivegrid/dokploy-vscode"
+   },
+   "activationEvents": [],
+   "main": "./dist/extension.js",
+   "contributes": {
+      "viewsContainers": {
+         "activitybar": [
+            {
+               "id": "dokploy",
+               "title": "Dokploy",
+               "icon": "media/dokploy.svg"
+            }
+         ]
+      },
+      "views": {
+         "dokploy": [
+            {
+               "id": "dokploy.servers",
+               "name": "Servers"
+            },
+            {
+               "id": "dokploy.projects",
+               "name": "Projects & Services"
+            }
+         ]
+      },
+      "commands": [
+         {
+            "command": "dokploy.addServer",
+            "title": "Add Dokploy Server",
+            "icon": "$(add)",
+            "category": "Dokploy"
+         },
+         {
+            "command": "dokploy.removeServer",
+            "title": "Remove Server",
+            "icon": "$(trash)",
+            "category": "Dokploy"
+         },
+         {
+            "command": "dokploy.refreshProjects",
+            "title": "Refresh Projects",
+            "icon": "$(refresh)",
+            "category": "Dokploy"
+         },
+         {
+            "command": "dokploy.deploy",
+            "title": "Deploy to Dokploy",
+            "icon": "$(rocket)",
+            "category": "Dokploy"
+         },
+         {
+            "command": "dokploy.createProject",
+            "title": "Create Project",
+            "icon": "$(new-folder)",
+            "category": "Dokploy"
+         },
+         {
+            "command": "dokploy.createApplication",
+            "title": "Create Application",
+            "icon": "$(file-add)",
+            "category": "Dokploy"
+         },
+         {
+            "command": "dokploy.viewLogs",
+            "title": "View Logs",
+            "icon": "$(output)",
+            "category": "Dokploy"
+         },
+         {
+            "command": "dokploy.startApp",
+            "title": "Start Application",
+            "icon": "$(debug-start)",
+            "category": "Dokploy"
+         },
+         {
+            "command": "dokploy.stopApp",
+            "title": "Stop Application",
+            "icon": "$(debug-stop)",
+            "category": "Dokploy"
+         },
+         {
+            "command": "dokploy.redeployApp",
+            "title": "Redeploy Application",
+            "icon": "$(sync)",
+            "category": "Dokploy"
+         },
+         {
+            "command": "dokploy.manageEnvVars",
+            "title": "Manage Environment Variables",
+            "icon": "$(symbol-variable)",
+            "category": "Dokploy"
+         },
+         {
+            "command": "dokploy.manageDomains",
+            "title": "Manage Domains",
+            "icon": "$(globe)",
+            "category": "Dokploy"
+         },
+         {
+            "command": "dokploy.openInBrowser",
+            "title": "Open in Browser",
+            "icon": "$(link-external)",
+            "category": "Dokploy"
+         },
+         {
+            "command": "dokploy.openDashboard",
+            "title": "Dokploy Dashboard",
+            "icon": "$(browser)",
+            "category": "Dokploy"
+         },
+         {
+            "command": "dokploy.quickDeploy",
+            "title": "Quick Deploy Current Workspace",
+            "icon": "$(cloud-upload)",
+            "category": "Dokploy"
+         },
+         {
+            "command": "dokploy.pushAndDeploy",
+            "title": "Push & Deploy",
+            "icon": "$(git-push)",
+            "category": "Dokploy"
+         },
+         {
+            "command": "dokploy.createCompose",
+            "title": "Create Compose Service",
+            "icon": "$(layers)",
+            "category": "Dokploy"
+         },
+         {
+            "command": "dokploy.editComposeFile",
+            "title": "Edit Compose File",
+            "icon": "$(edit)",
+            "category": "Dokploy"
+         },
+         {
+            "command": "dokploy.deployCompose",
+            "title": "Deploy Compose",
+            "icon": "$(rocket)",
+            "category": "Dokploy"
+         },
+         {
+            "command": "dokploy.startCompose",
+            "title": "Start Compose",
+            "icon": "$(debug-start)",
+            "category": "Dokploy"
+         },
+         {
+            "command": "dokploy.stopCompose",
+            "title": "Stop Compose",
+            "icon": "$(debug-stop)",
+            "category": "Dokploy"
+         },
+         {
+            "command": "dokploy.redeployCompose",
+            "title": "Redeploy Compose",
+            "icon": "$(sync)",
+            "category": "Dokploy"
+         }
+      ],
+      "menus": {
+         "view/title": [
+            {
+               "command": "dokploy.addServer",
+               "when": "view == dokploy.servers",
+               "group": "navigation"
+            },
+            {
+               "command": "dokploy.refreshProjects",
+               "when": "view == dokploy.projects",
+               "group": "navigation"
+            },
+            {
+               "command": "dokploy.createProject",
+               "when": "view == dokploy.projects",
+               "group": "navigation"
+            },
+            {
+               "command": "dokploy.openDashboard",
+               "when": "view == dokploy.projects",
+               "group": "navigation"
+            }
+         ],
+         "view/item/context": [
+            {
+               "command": "dokploy.removeServer",
+               "when": "view == dokploy.servers && viewItem == server",
+               "group": "inline"
+            },
+            {
+               "command": "dokploy.openDashboard",
+               "when": "view == dokploy.servers && viewItem == server"
+            },
+            {
+               "command": "dokploy.createApplication",
+               "when": "view == dokploy.projects && viewItem == project",
+               "group": "inline"
+            },
+            {
+               "command": "dokploy.createCompose",
+               "when": "view == dokploy.projects && viewItem == project"
+            },
+            {
+               "command": "dokploy.deploy",
+               "when": "view == dokploy.projects && viewItem == application",
+               "group": "inline"
+            },
+            {
+               "command": "dokploy.pushAndDeploy",
+               "when": "view == dokploy.projects && viewItem == application"
+            },
+            {
+               "command": "dokploy.viewLogs",
+               "when": "view == dokploy.projects && viewItem == application"
+            },
+            {
+               "command": "dokploy.startApp",
+               "when": "view == dokploy.projects && viewItem == application"
+            },
+            {
+               "command": "dokploy.stopApp",
+               "when": "view == dokploy.projects && viewItem == application"
+            },
+            {
+               "command": "dokploy.redeployApp",
+               "when": "view == dokploy.projects && viewItem == application"
+            },
+            {
+               "command": "dokploy.manageEnvVars",
+               "when": "view == dokploy.projects && viewItem == application"
+            },
+            {
+               "command": "dokploy.manageDomains",
+               "when": "view == dokploy.projects && viewItem == application"
+            },
+            {
+               "command": "dokploy.openInBrowser",
+               "when": "view == dokploy.projects && viewItem == application"
+            },
+            {
+               "command": "dokploy.deployCompose",
+               "when": "view == dokploy.projects && viewItem == compose",
+               "group": "inline"
+            },
+            {
+               "command": "dokploy.editComposeFile",
+               "when": "view == dokploy.projects && viewItem == compose"
+            },
+            {
+               "command": "dokploy.viewLogs",
+               "when": "view == dokploy.projects && viewItem == compose"
+            },
+            {
+               "command": "dokploy.startCompose",
+               "when": "view == dokploy.projects && viewItem == compose"
+            },
+            {
+               "command": "dokploy.stopCompose",
+               "when": "view == dokploy.projects && viewItem == compose"
+            },
+            {
+               "command": "dokploy.redeployCompose",
+               "when": "view == dokploy.projects && viewItem == compose"
+            }
+         ],
+         "explorer/context": [
+            {
+               "command": "dokploy.quickDeploy",
+               "group": "dokploy@1"
+            },
+            {
+               "command": "dokploy.pushAndDeploy",
+               "group": "dokploy@2"
+            }
+         ]
+      },
+      "configuration": {
+         "title": "Dokploy",
+         "properties": {
+            "dokploy.defaultBuildType": {
+               "type": "string",
+               "default": "nixpacks",
+               "enum": [
+                  "nixpacks",
+                  "dockerfile",
+                  "heroku_buildpacks",
+                  "paketo_buildpacks",
+                  "static"
+               ],
+               "description": "Default build type for new applications"
+            },
+            "dokploy.autoDetectProjectType": {
+               "type": "boolean",
+               "default": true,
+               "description": "Automatically detect project type and configure build settings"
+            },
+            "dokploy.showStatusBar": {
+               "type": "boolean",
+               "default": true,
+               "description": "Show Dokploy deployment status in the status bar"
+            }
+         }
+      }
+   },
+   "scripts": {
+      "vscode:prepublish": "npm run build",
+      "build": "esbuild ./src/extension.ts --bundle --outfile=dist/extension.js --external:vscode --format=cjs --platform=node --minify",
+      "watch": "esbuild ./src/extension.ts --bundle --outfile=dist/extension.js --external:vscode --format=cjs --platform=node --watch",
+      "lint": "tsc --noEmit"
+   },
+   "devDependencies": {
+      "@types/node": "^25.3.0",
+      "@types/vscode": "^1.109.0",
+      "@vscode/vsce": "^3.7.1",
+      "esbuild": "^0.27.3",
+      "typescript": "^5.9.3"
+   }
+}
