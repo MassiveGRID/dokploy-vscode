@@ -9,6 +9,7 @@ import { registerEnvAndDomainCommands } from "./commands/envAndDomains";
 import { registerLogCommands } from "./commands/logs";
 import { registerPushDeployCommands } from "./commands/pushDeploy";
 import { registerComposeCommands } from "./commands/compose";
+import { registerTemplateCommands } from "./commands/templates";
 
 let statusBarItem: vscode.StatusBarItem;
 
@@ -93,6 +94,7 @@ export function activate(context: vscode.ExtensionContext) {
   registerLogCommands(context, serverManager);
   registerPushDeployCommands(context, serverManager, refreshTree);
   registerComposeCommands(context, serverManager, refreshTree);
+  registerTemplateCommands(context, serverManager, refreshTree);
 
   // ── Status Bar ──────────────────────────────────────────────────
   const showStatusBar = vscode.workspace

@@ -71,6 +71,16 @@ export interface DokployCompose {
   createdAt: string;
 }
 
+export interface TemplateMetadata {
+  id: string;
+  name: string;
+  version: string;
+  description: string;
+  logo: string;
+  links: { github?: string; website?: string; docs?: string };
+  tags: string[];
+}
+
 export class DokployClient {
   private baseUrl: string;
   private apiKey: string;
@@ -415,6 +425,12 @@ export class DokployClient {
 
   async saveComposeFile(composeId: string, composeFile: string): Promise<void> {
     await this.request("POST", "/compose.update", { composeId, composeFile });
+  }
+
+  // ── Templates ───────────────────────────────────────────────────────
+
+  async deployTemplate(id: string, environmentId: string): Promise<any> {
+    return this.request("POST", "/compose.deployTemplate", { id, environmentId });
   }
 
   // ── Utility ───────────────────────────────────────────────────────
