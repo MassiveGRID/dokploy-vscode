@@ -3,6 +3,7 @@ import { ServerManager } from "./api/serverManager";
 import { ServersTreeProvider } from "./views/serversTree";
 import { ProjectsTreeProvider } from "./views/projectsTree";
 import { DashboardPanel } from "./views/dashboard";
+import { AppDetailPanel } from "./views/appDetail";
 import { registerDeployCommands } from "./commands/deploy";
 import { registerProjectCommands } from "./commands/projects";
 import { registerEnvAndDomainCommands } from "./commands/envAndDomains";
@@ -84,6 +85,18 @@ export function activate(context: vscode.ExtensionContext) {
         }
         // Otherwise open the built-in webview dashboard
         DashboardPanel.show(context, serverManager);
+      }
+    )
+  );
+
+  // ── App Detail Panel ────────────────────────────────────────────
+  context.subscriptions.push(
+    vscode.commands.registerCommand(
+      "dokploy.openAppDetail",
+      (item: any) => {
+        const app = item?.application;
+        if (!app) return;
+        AppDetailPanel.show(context, serverManager, app.applicationId, app.name);
       }
     )
   );

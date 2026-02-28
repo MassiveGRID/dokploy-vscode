@@ -30,14 +30,30 @@ export interface DokployApplication {
   branch?: string;
   dockerImage?: string;
   env?: string;
-  memoryReservation?: number;
-  memoryLimit?: number;
-  cpuReservation?: number;
-  cpuLimit?: number;
+  memoryReservation?: string | number;
+  memoryLimit?: string | number;
+  cpuReservation?: string | number;
+  cpuLimit?: string | number;
+  // Build
+  dockerfile?: string;
+  dockerContextPath?: string;
+  publishDirectory?: string;
+  command?: string;
+  // Replicas
+  replicas?: number;
+  // Preview deployments
+  isPreviewDeploymentsActive?: boolean;
+  previewWildcard?: string;
+  previewPort?: number;
+  previewHttps?: boolean;
+  previewCertificateType?: string;
+  previewLimit?: number;
+  previewEnv?: string;
 }
 
 export interface DokployDomain {
-  domainId: string;
+  domainId?: string;
+  id?: string;
   host: string;
   path: string;
   port: number;
@@ -326,10 +342,10 @@ export class DokployClient {
   }
 
   async generateDomain(
-    applicationId: string
-  ): Promise<{ domain: string }> {
+    appName: string
+  ): Promise<any> {
     return this.request("POST", "/domain.generateDomain", {
-      applicationId,
+      appName,
     });
   }
 
@@ -463,6 +479,103 @@ export class DokployClient {
   async stopDatabase(dbType: string, id: string): Promise<void> {
     const idField = `${dbType}Id`;
     await this.request("POST", `/${dbType}.stop`, { [idField]: id });
+  }
+
+  // ── Schedules ─────────────────────────────────────────────────────
+
+  async getSchedules(applicationId: string): Promise<any[]> {
+    try {
+      return await this.request<any[]>("GET", `/schedule.all?applicationId=${applicationId}`);
+    } catch { return []; }
+  }
+
+  async createSchedule(payload: {
+    applicationId: string;
+    cronExpression: string;
+    scheduleName?: string;
+    command?: string;
+    timezone?: string;
+    enabled?: boolean;
+  }): Promise<any> {
+    return this.request("POST", "/schedule.create", payload);
+  }
+
+  async deleteSchedule(scheduleId: string): Promise<void> {
+    await this.request("POST", "/schedule.remove", { scheduleId });
+  }
+
+  async runSchedule(scheduleId: string): Promise<void> {
+    await this.request("POST", "/schedule.run", { scheduleId });
+  }
+
+  // ── Backups ───────────────────────────────────────────────────────
+
+  async getBackups(serviceType: "application" | "postgres" | "mysql" | "mariadb" | "mongo" | "redis", serviceId: string): Promise<any[]> {
+    try {
+      const idParam = serviceType === "application" ? `applicationId=${serviceId}` : `${serviceType}Id=${serviceId}`;
+      return await this.request<any[]>("GET", `/backup.all?${idParam}`);
+    } catch { return []; }
+  }
+
+  async createBackup(payload: {
+    applicationId?: string;
+    postgresId?: string;
+    mysqlId?: string;
+    mariadbId?: string;
+    mongoId?: string;
+    redisId?: string;
+    cronExpression?: string;
+    enabled?: boolean;
+    destinationId?: string;
+    prefix?: string;
+    keepLatestCount?: number;
+    databaseType?: string;
+    databaseName?: string;
+    databaseBackupAllFlag?: boolean;
+  }): Promise<any> {
+    return this.request("POST", "/backup.create", payload);
+  }
+
+  async updateBackup(backupId: string, updates: any): Promise<any> {
+    return this.request("POST", "/backup.update", { backupId, ...updates });
+  }
+
+  async deleteBackup(backupId: string): Promise<void> {
+    await this.request("POST", "/backup.remove", { backupId });
+  }
+
+  async runBackup(backupId: string): Promise<void> {
+    await this.request("POST", "/backup.manualBackup", { backupId });
+  }
+
+  async getBackupDestinations(): Promise<any[]> {
+    try {
+      return await this.request<any[]>("GET", "/destination.all");
+    } catch { return []; }
+  }
+
+  // ── Preview Deployments ───────────────────────────────────────────
+
+  async getPreviewDeployments(applicationId: string): Promise<any[]> {
+    try {
+      return await this.request<any[]>("GET", `/previewDeployment.all?applicationId=${applicationId}`);
+    } catch { return []; }
+  }
+
+  async deletePreviewDeployment(previewDeploymentId: string): Promise<void> {
+    await this.request("POST", "/previewDeployment.delete", { previewDeploymentId });
+  }
+
+  async redeployPreviewDeployment(previewDeploymentId: string): Promise<void> {
+    await this.request("POST", "/previewDeployment.redeploy", { previewDeploymentId });
+  }
+
+  // ── Monitoring ────────────────────────────────────────────────────
+
+  async getMonitoring(appName: string): Promise<any> {
+    try {
+      return await this.request("GET", `/application.readAppMonitoring?appName=${appName}`);
+    } catch { return null; }
   }
 
   // ── Utility ───────────────────────────────────────────────────────

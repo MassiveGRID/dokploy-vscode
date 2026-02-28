@@ -21,6 +21,11 @@ export class ApplicationTreeItem extends vscode.TreeItem {
   constructor(public readonly application: DokployApplication) {
     super(application.name, vscode.TreeItemCollapsibleState.None);
     this.contextValue = "application";
+    this.command = {
+      command: "dokploy.openAppDetail",
+      title: "Open Application Details",
+      arguments: [this],
+    };
     this.description = this.getStatusLabel();
     this.iconPath = this.getStatusIcon();
     this.tooltip = [
