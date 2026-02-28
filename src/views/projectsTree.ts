@@ -79,7 +79,11 @@ export class ComposeTreeItem extends vscode.TreeItem {
 }
 
 export class DatabaseTreeItem extends vscode.TreeItem {
-  constructor(public readonly db: any, public readonly dbType: string) {
+  constructor(
+    public readonly db: any,
+    public readonly dbType: string,
+    public readonly dbId: string
+  ) {
     super(db.name || db.appName || dbType, vscode.TreeItemCollapsibleState.None);
     this.contextValue = "database";
     this.description = `${dbType} · ${db.applicationStatus || "unknown"}`;
@@ -160,7 +164,8 @@ export class ProjectsTreeProvider
           for (const dbType of dbTypes) {
             const dbs = env[dbType] || [];
             for (const db of dbs) {
-              items.push(new DatabaseTreeItem(db, dbType));
+              const idField = `${dbType}Id`;
+              items.push(new DatabaseTreeItem(db, dbType, db[idField] || ""));
             }
           }
         }

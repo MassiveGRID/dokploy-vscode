@@ -433,6 +433,38 @@ export class DokployClient {
     return this.request("POST", "/compose.deployTemplate", { id, environmentId });
   }
 
+  // ── Deployment Logs ───────────────────────────────────────────────
+
+  async getDeploymentLog(deploymentId: string): Promise<string> {
+    try {
+      const result = await this.request<any>(
+        "GET",
+        `/deployment.readDeploymentLog?deploymentId=${deploymentId}`
+      );
+      if (typeof result === "string") return result;
+      return result?.log || result?.content || result?.data || JSON.stringify(result, null, 2);
+    } catch {
+      return "";
+    }
+  }
+
+  // ── Databases ─────────────────────────────────────────────────────
+
+  async getDatabase(dbType: string, id: string): Promise<any> {
+    const idField = `${dbType}Id`;
+    return this.request("GET", `/${dbType}.one?${idField}=${id}`);
+  }
+
+  async startDatabase(dbType: string, id: string): Promise<void> {
+    const idField = `${dbType}Id`;
+    await this.request("POST", `/${dbType}.start`, { [idField]: id });
+  }
+
+  async stopDatabase(dbType: string, id: string): Promise<void> {
+    const idField = `${dbType}Id`;
+    await this.request("POST", `/${dbType}.stop`, { [idField]: id });
+  }
+
   // ── Utility ───────────────────────────────────────────────────────
 
   getBaseUrl(): string {

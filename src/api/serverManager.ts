@@ -36,6 +36,7 @@ export class ServerManager {
     const name = await vscode.window.showInputBox({
       prompt: "Server name (e.g., 'production', 'staging')",
       placeHolder: "my-server",
+      ignoreFocusOut: true,
       validateInput: (v) => {
         if (!v.trim()) return "Name is required";
         if (this.servers.some((s) => s.name === v.trim()))
@@ -48,6 +49,7 @@ export class ServerManager {
     const url = await vscode.window.showInputBox({
       prompt: "Dokploy server URL",
       placeHolder: "https://your-server.com:3000",
+      ignoreFocusOut: true,
       validateInput: (v) => {
         if (!v.trim()) return "URL is required";
         try {
@@ -63,6 +65,7 @@ export class ServerManager {
     const apiKey = await vscode.window.showInputBox({
       prompt: "API Key (from Dokploy Settings > API Keys)",
       password: true,
+      ignoreFocusOut: true,
       validateInput: (v) => (v.trim() ? null : "API key is required"),
     });
     if (!apiKey) return;

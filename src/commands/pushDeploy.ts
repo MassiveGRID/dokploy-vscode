@@ -2,6 +2,7 @@ import * as vscode from "vscode";
 import { execSync } from "child_process";
 import { ServerManager } from "../api/serverManager";
 import { ApplicationTreeItem } from "../views/projectsTree";
+import { watchDeployment } from "../utils/deployWatcher";
 
 export function registerPushDeployCommands(
   context: vscode.ExtensionContext,
@@ -109,6 +110,7 @@ export function registerPushDeployCommands(
             const message = await vscode.window.showInputBox({
               prompt: "Commit message",
               value: "deploy: update",
+              ignoreFocusOut: true,
               validateInput: (v) =>
                 v.trim() ? null : "Commit message is required",
             });
@@ -156,6 +158,7 @@ export function registerPushDeployCommands(
               // Step 2: Trigger deploy
               progress.report({ message: "Triggering deployment..." });
               await client.deploy(applicationId);
+              watchDeployment(client, applicationId, "application", appName, refreshTree);
 
               vscode.window
                 .showInformationMessage(

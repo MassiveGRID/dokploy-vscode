@@ -11,6 +11,7 @@ export function registerLogCommands(
 ) {
   const outputChannels = new Map<string, vscode.OutputChannel>();
 
+  // ── View Live Logs ────────────────────────────────────────────────
   context.subscriptions.push(
     vscode.commands.registerCommand(
       "dokploy.viewLogs",
@@ -103,7 +104,6 @@ export function registerLogCommands(
         channel.appendLine(`╚══════════════════════════════════════════════╝`);
         channel.appendLine(``);
 
-        // Fetch deployment history
         try {
           channel.appendLine(`── Deployment History ──────────────────────────`);
           channel.appendLine(``);
@@ -116,7 +116,6 @@ export function registerLogCommands(
           if (!deployments || deployments.length === 0) {
             channel.appendLine(`  No deployments yet.`);
           } else {
-            // Show last 10 deployments
             const recent = deployments.slice(0, 10);
             for (const dep of recent) {
               const date = new Date(dep.createdAt).toLocaleString();
@@ -139,7 +138,6 @@ export function registerLogCommands(
 
           channel.appendLine(``);
 
-          // Show current application details
           if (serviceType === "application") {
             const app = await client.getApplication(serviceId);
             channel.appendLine(`── Application Info ────────────────────────────`);
@@ -158,12 +156,11 @@ export function registerLogCommands(
             channel.appendLine(``);
           }
 
-          // Start polling for live updates
-          channel.appendLine(`── Live Status (polling every 5s) ──────────────`);
+          channel.appendLine(`── Live Status (polling every 5s — use Ctrl+F to search) ──`);
           channel.appendLine(``);
 
+          let lastRawStatus = "";
           let lastDeploymentCount = deployments?.length || 0;
-          let lastStatus = "";
 
           const poller = setInterval(async () => {
             try {
@@ -172,47 +169,56 @@ export function registerLogCommands(
                   ? await client.getDeployments(serviceId)
                   : await client.getDeploymentsByCompose(serviceId);
 
-              if (newDeployments && newDeployments.length > 0) {
-                const latest = newDeployments[0];
-                const statusLine = `${getStatusIcon(latest.status)} ${latest.status}`;
+              if (!newDeployments?.length) return;
 
-                // Log new deployments
-                if (newDeployments.length > lastDeploymentCount) {
-                  const newOnes = newDeployments.slice(
-                    0,
-                    newDeployments.length - lastDeploymentCount
-                  );
-                  for (const dep of newOnes.reverse()) {
-                    const date = new Date(dep.createdAt).toLocaleString();
-                    channel!.appendLine(
-                      `  [NEW] ${getStatusIcon(dep.status)} ${dep.title || "Deployment"} — ${dep.status} — ${date}`
-                    );
-                  }
-                  lastDeploymentCount = newDeployments.length;
-                }
+              const latest = newDeployments[0];
 
-                // Log status changes
-                if (statusLine !== lastStatus) {
-                  const now = new Date().toLocaleTimeString();
+              // Log new deployments
+              if (newDeployments.length > lastDeploymentCount) {
+                const newOnes = newDeployments.slice(
+                  0,
+                  newDeployments.length - lastDeploymentCount
+                );
+                for (const dep of newOnes.reverse()) {
+                  const date = new Date(dep.createdAt).toLocaleString();
                   channel!.appendLine(
-                    `  [${now}] Status: ${statusLine}`
+                    `  [NEW] ${getStatusIcon(dep.status)} ${dep.title || "Deployment"} — ${dep.status} — ${date}`
                   );
-                  lastStatus = statusLine;
+                }
+                lastDeploymentCount = newDeployments.length;
+              }
 
-                  // If deployment is done or errored, show a notification
-                  if (
-                    latest.status === "done" &&
-                    lastStatus.includes("running")
-                  ) {
+              // Log status changes (fixed: track raw status separately)
+              if (latest.status !== lastRawStatus) {
+                const now = new Date().toLocaleTimeString();
+                channel!.appendLine(
+                  `  [${now}] Status: ${getStatusIcon(latest.status)} ${latest.status}`
+                );
+
+                // Notify on terminal states (but not on the very first poll)
+                if (lastRawStatus !== "") {
+                  if (latest.status === "done") {
                     vscode.window.showInformationMessage(
-                      `${serviceName} deployment completed!`
-                    );
+                      `${serviceName} deployment completed!`,
+                      "View Full Log"
+                    ).then((action) => {
+                      if (action === "View Full Log") {
+                        vscode.commands.executeCommand("dokploy.viewDeploymentLog", item);
+                      }
+                    });
                   } else if (latest.status === "error") {
                     vscode.window.showErrorMessage(
-                      `${serviceName} deployment failed!`
-                    );
+                      `${serviceName} deployment failed!`,
+                      "View Full Log"
+                    ).then((action) => {
+                      if (action === "View Full Log") {
+                        vscode.commands.executeCommand("dokploy.viewDeploymentLog", item);
+                      }
+                    });
                   }
                 }
+
+                lastRawStatus = latest.status;
               }
             } catch {
               // Silently ignore polling errors
@@ -221,7 +227,6 @@ export function registerLogCommands(
 
           activePollers.set(serviceId, poller);
 
-          // Stop polling when the channel is disposed
           context.subscriptions.push({
             dispose: () => {
               clearInterval(poller);
@@ -231,6 +236,107 @@ export function registerLogCommands(
         } catch (err: any) {
           channel.appendLine(`Error fetching logs: ${err.message}`);
         }
+      }
+    )
+  );
+
+  // ── View Full Deployment Log ──────────────────────────────────────
+  context.subscriptions.push(
+    vscode.commands.registerCommand(
+      "dokploy.viewDeploymentLog",
+      async (item?: ApplicationTreeItem | ComposeTreeItem) => {
+        const client = serverManager.getActiveClient();
+        if (!client) {
+          vscode.window.showErrorMessage("No Dokploy server configured.");
+          return;
+        }
+
+        let serviceId: string;
+        let serviceName: string;
+        let serviceType: "application" | "compose";
+
+        if (item instanceof ApplicationTreeItem) {
+          serviceId = item.application.applicationId;
+          serviceName = item.application.name;
+          serviceType = "application";
+        } else if (item instanceof ComposeTreeItem) {
+          serviceId = item.compose.composeId;
+          serviceName = item.compose.name;
+          serviceType = "compose";
+        } else {
+          // Pick service, then deployment
+          const projects = await client.getProjects();
+          const services: { label: string; id: string; type: "application" | "compose" }[] = [];
+          for (const p of projects) {
+            try {
+              const full = await client.getProject(p.projectId);
+              const environments = (full as any).environments || [];
+              for (const env of environments) {
+                for (const app of env.applications || []) {
+                  services.push({ label: app.name, id: app.applicationId, type: "application" });
+                }
+                for (const comp of env.compose || []) {
+                  services.push({ label: comp.name, id: comp.composeId, type: "compose" });
+                }
+              }
+            } catch {}
+          }
+          if (services.length === 0) {
+            vscode.window.showInformationMessage("No services found.");
+            return;
+          }
+          const pickedService = await vscode.window.showQuickPick(services, {
+            placeHolder: "Select service",
+          });
+          if (!pickedService) return;
+          serviceId = pickedService.id;
+          serviceName = pickedService.label;
+          serviceType = pickedService.type;
+        }
+
+        // Fetch deployment list
+        let deployments;
+        try {
+          deployments =
+            serviceType === "application"
+              ? await client.getDeployments(serviceId)
+              : await client.getDeploymentsByCompose(serviceId);
+        } catch (err: any) {
+          vscode.window.showErrorMessage(`Failed to fetch deployments: ${err.message}`);
+          return;
+        }
+
+        if (!deployments?.length) {
+          vscode.window.showInformationMessage(`No deployments found for ${serviceName}.`);
+          return;
+        }
+
+        const deploymentItems = deployments.slice(0, 20).map((d) => ({
+          label: `${getStatusIcon(d.status)} ${d.title || "Deployment"}`,
+          description: `${d.status} — ${new Date(d.createdAt).toLocaleString()}`,
+          deploymentId: d.deploymentId,
+        }));
+
+        const picked = await vscode.window.showQuickPick(deploymentItems, {
+          placeHolder: `Select deployment to view log for ${serviceName}`,
+        });
+        if (!picked) return;
+
+        const statusMsg = vscode.window.setStatusBarMessage("$(loading~spin) Loading deployment log...");
+
+        const logContent = await client.getDeploymentLog(picked.deploymentId);
+        statusMsg.dispose();
+
+        if (!logContent) {
+          vscode.window.showInformationMessage("No log content available for this deployment.");
+          return;
+        }
+
+        const doc = await vscode.workspace.openTextDocument({
+          content: logContent,
+          language: "log",
+        });
+        await vscode.window.showTextDocument(doc, { preview: true });
       }
     )
   );

@@ -3,6 +3,7 @@ import { ServerManager } from "../api/serverManager";
 import { DokployApplication } from "../api/client";
 import { ApplicationTreeItem } from "../views/projectsTree";
 import { detectProject, ProjectInfo } from "../utils/projectDetector";
+import { watchDeployment } from "../utils/deployWatcher";
 
 export function registerDeployCommands(
   context: vscode.ExtensionContext,
@@ -59,6 +60,7 @@ export function registerDeployCommands(
               vscode.window.showInformationMessage(
                 "Deployment triggered successfully!"
               );
+              watchDeployment(client, applicationId, "application", item instanceof ApplicationTreeItem ? item.application.name : applicationId, refreshTree);
               refreshTree();
             } catch (err: any) {
               vscode.window.showErrorMessage(
@@ -135,6 +137,7 @@ export function registerDeployCommands(
         const projectName = await vscode.window.showInputBox({
           prompt: "New project name",
           value: workspaceFolders[0].name,
+          ignoreFocusOut: true,
         });
         if (!projectName) return;
         const newProject = await activeClient.createProject(projectName);
@@ -145,6 +148,7 @@ export function registerDeployCommands(
       const appName = await vscode.window.showInputBox({
         prompt: "Application name",
         value: workspaceFolders[0].name.toLowerCase().replace(/[^a-z0-9-]/g, "-"),
+        ignoreFocusOut: true,
       });
       if (!appName) return;
 
@@ -178,12 +182,14 @@ export function registerDeployCommands(
                 "Git repository URL (Dokploy will pull code from here)",
               placeHolder: "https://github.com/user/repo.git",
               value: await getGitRemoteUrl(workspacePath),
+              ignoreFocusOut: true,
             });
 
             if (repoUrl) {
               const branch = await vscode.window.showInputBox({
                 prompt: "Branch to deploy",
                 value: await getGitBranch(workspacePath) || "main",
+                ignoreFocusOut: true,
               });
 
               if (branch) {
@@ -230,6 +236,7 @@ export function registerDeployCommands(
               const domain = await vscode.window.showInputBox({
                 prompt: "Enter your domain",
                 placeHolder: "app.example.com",
+                ignoreFocusOut: true,
               });
               if (domain) {
                 await activeClient.createDomain(
@@ -255,6 +262,7 @@ export function registerDeployCommands(
               vscode.window.showInformationMessage(
                 `Deployment triggered for ${appName}!`
               );
+              watchDeployment(activeClient, app.applicationId, "application", appName, refreshTree);
             }
 
             refreshTree();
@@ -323,6 +331,7 @@ export function registerDeployCommands(
           vscode.window.showInformationMessage(
             `Redeploying ${item.application.name}...`
           );
+          watchDeployment(client, item.application.applicationId, "application", item.application.name, refreshTree);
           refreshTree();
         } catch (err: any) {
           vscode.window.showErrorMessage(

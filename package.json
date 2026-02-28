@@ -2,7 +2,7 @@
    "name": "dokploy-vscode",
    "displayName": "Dokploy - Deploy & Manage",
    "description": "Deploy your code to Dokploy servers directly from VS Code. Create services, manage deployments, view logs, and configure domains.",
-   "version": "1.1.0",
+   "version": "1.3.0",
    "publisher": "MassiveGRID",
    "license": "MIT",
    "engines": {
@@ -188,6 +188,42 @@
             "title": "Browse Templates",
             "icon": "$(package)",
             "category": "Dokploy"
+         },
+         {
+            "command": "dokploy.deleteProject",
+            "title": "Delete Project",
+            "icon": "$(trash)",
+            "category": "Dokploy"
+         },
+         {
+            "command": "dokploy.viewDeploymentLog",
+            "title": "View Deployment Log",
+            "icon": "$(list-ordered)",
+            "category": "Dokploy"
+         },
+         {
+            "command": "dokploy.syncEnvToLocal",
+            "title": "Sync Server Env → Local .env",
+            "icon": "$(cloud-download)",
+            "category": "Dokploy"
+         },
+         {
+            "command": "dokploy.copyDbConnectionString",
+            "title": "Copy Connection String",
+            "icon": "$(clippy)",
+            "category": "Dokploy"
+         },
+         {
+            "command": "dokploy.startDatabase",
+            "title": "Start Database",
+            "icon": "$(debug-start)",
+            "category": "Dokploy"
+         },
+         {
+            "command": "dokploy.stopDatabase",
+            "title": "Stop Database",
+            "icon": "$(debug-stop)",
+            "category": "Dokploy"
          }
       ],
       "menus": {
@@ -238,6 +274,10 @@
                "when": "view == dokploy.projects && viewItem == project"
             },
             {
+               "command": "dokploy.deleteProject",
+               "when": "view == dokploy.projects && viewItem == project"
+            },
+            {
                "command": "dokploy.deploy",
                "when": "view == dokploy.projects && viewItem == application",
                "group": "inline"
@@ -275,6 +315,14 @@
                "when": "view == dokploy.projects && viewItem == application"
             },
             {
+               "command": "dokploy.viewDeploymentLog",
+               "when": "view == dokploy.projects && viewItem == application"
+            },
+            {
+               "command": "dokploy.syncEnvToLocal",
+               "when": "view == dokploy.projects && viewItem == application"
+            },
+            {
                "command": "dokploy.deployCompose",
                "when": "view == dokploy.projects && viewItem == compose",
                "group": "inline"
@@ -298,6 +346,23 @@
             {
                "command": "dokploy.redeployCompose",
                "when": "view == dokploy.projects && viewItem == compose"
+            },
+            {
+               "command": "dokploy.viewDeploymentLog",
+               "when": "view == dokploy.projects && viewItem == compose"
+            },
+            {
+               "command": "dokploy.copyDbConnectionString",
+               "when": "view == dokploy.projects && viewItem == database",
+               "group": "inline"
+            },
+            {
+               "command": "dokploy.startDatabase",
+               "when": "view == dokploy.projects && viewItem == database"
+            },
+            {
+               "command": "dokploy.stopDatabase",
+               "when": "view == dokploy.projects && viewItem == database"
             }
          ],
          "explorer/context": [

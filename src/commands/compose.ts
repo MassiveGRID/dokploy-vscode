@@ -3,6 +3,7 @@ import * as fs from "fs";
 import * as path from "path";
 import { ServerManager } from "../api/serverManager";
 import { ProjectTreeItem, ComposeTreeItem } from "../views/projectsTree";
+import { watchDeployment } from "../utils/deployWatcher";
 
 export function registerComposeCommands(
   context: vscode.ExtensionContext,
@@ -40,6 +41,7 @@ export function registerComposeCommands(
         const name = await vscode.window.showInputBox({
           prompt: "Compose service name",
           placeHolder: "my-stack",
+          ignoreFocusOut: true,
           validateInput: (v) => (v.trim() ? null : "Name is required"),
         });
         if (!name) return;
@@ -47,6 +49,7 @@ export function registerComposeCommands(
         const appName = await vscode.window.showInputBox({
           prompt: "App Name (internal identifier)",
           value: name.toLowerCase().replace(/[^a-z0-9-]/g, "-"),
+          ignoreFocusOut: true,
           validateInput: (v) => {
             if (!v.trim()) return "App name is required";
             if (!/^[a-z0-9][a-z0-9-]*$/.test(v.trim()))
@@ -58,6 +61,7 @@ export function registerComposeCommands(
 
         const description = await vscode.window.showInputBox({
           prompt: "Description (optional)",
+          ignoreFocusOut: true,
         });
 
         try {
@@ -193,6 +197,7 @@ export function registerComposeCommands(
           vscode.window.showInformationMessage(
             `Deploying ${item.compose.name}...`
           );
+          watchDeployment(client, item.compose.composeId, "compose", item.compose.name, refreshTree);
           refreshTree();
         } catch (err: any) {
           vscode.window.showErrorMessage(
@@ -254,6 +259,7 @@ export function registerComposeCommands(
           vscode.window.showInformationMessage(
             `Redeploying ${item.compose.name}...`
           );
+          watchDeployment(client, item.compose.composeId, "compose", item.compose.name, refreshTree);
           refreshTree();
         } catch (err: any) {
           vscode.window.showErrorMessage(
