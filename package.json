@@ -2,7 +2,7 @@
    "name": "dokploy-vscode",
    "displayName": "Dokploy - Deploy & Manage",
    "description": "Deploy your code to Dokploy servers directly from VS Code. Create services, manage deployments, view logs, and configure domains.",
-   "version": "1.5.9",
+   "version": "1.6.0",
    "publisher": "MassiveGRID",
    "license": "MIT",
    "engines": {
@@ -230,6 +230,12 @@
             "title": "Open Application Details",
             "icon": "$(window)",
             "category": "Dokploy"
+         },
+         {
+            "command": "dokploy.openComposeDetail",
+            "title": "Open Compose Details",
+            "icon": "$(window)",
+            "category": "Dokploy"
          }
       ],
       "menus": {
@@ -332,6 +338,11 @@
             {
                "command": "dokploy.syncEnvToLocal",
                "when": "view == dokploy.projects && viewItem == application"
+            },
+            {
+               "command": "dokploy.openComposeDetail",
+               "when": "view == dokploy.projects && viewItem == compose",
+               "group": "inline"
             },
             {
                "command": "dokploy.deployCompose",

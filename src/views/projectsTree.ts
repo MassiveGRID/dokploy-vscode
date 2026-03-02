@@ -77,6 +77,11 @@ export class ComposeTreeItem extends vscode.TreeItem {
   constructor(public readonly compose: any) {
     super(compose.name || compose.appName || "Compose", vscode.TreeItemCollapsibleState.None);
     this.contextValue = "compose";
+    this.command = {
+      command: "dokploy.openComposeDetail",
+      title: "Open Compose Details",
+      arguments: [this],
+    };
     this.description = `compose · ${compose.composeStatus || compose.applicationStatus || "unknown"}`;
     this.iconPath = new vscode.ThemeIcon("layers");
     this.tooltip = `Compose: ${compose.name}\nStatus: ${compose.composeStatus || compose.applicationStatus || "unknown"}`;
