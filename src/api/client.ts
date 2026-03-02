@@ -59,7 +59,9 @@ export interface DokployDomain {
   port: number;
   https: boolean;
   certificateType: string;
-  applicationId: string;
+  applicationId?: string;
+  composeId?: string;
+  serviceName?: string;
   createdAt: string;
 }
 
@@ -81,10 +83,13 @@ export interface DokployCompose {
   description: string;
   composeFile: string;
   composeStatus: string;
+  composeType?: string;
   sourceType: string;
   env?: string;
   projectId: string;
   createdAt: string;
+  repository?: string;
+  branch?: string;
 }
 
 export interface TemplateMetadata {
@@ -346,6 +351,32 @@ export class DokployClient {
   ): Promise<any> {
     return this.request("POST", "/domain.generateDomain", {
       appName,
+    });
+  }
+
+  async getComposeDomains(composeId: string): Promise<DokployDomain[]> {
+    return this.request<DokployDomain[]>(
+      "GET",
+      `/domain.byComposeId?composeId=${composeId}`
+    );
+  }
+
+  async createComposeDomain(
+    composeId: string,
+    host: string,
+    port: number = 3000,
+    https: boolean = false,
+    serviceName: string = ""
+  ): Promise<DokployDomain> {
+    return this.request<DokployDomain>("POST", "/domain.create", {
+      composeId,
+      host,
+      path: "/",
+      port,
+      https,
+      certificateType: https ? "letsencrypt" : "none",
+      domainType: "compose",
+      serviceName,
     });
   }
 
