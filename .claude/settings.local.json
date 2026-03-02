@@ -2,7 +2,13 @@
   "permissions": {
     "allow": [
       "Bash(npm run build)",
-      "Bash(npx vsce package --no-dependencies)"
+      "Bash(npx vsce package --no-dependencies)",
+      "Bash(npm run lint)",
+      "Bash(npx vsce package)",
+      "Bash(git commit:*)",
+      "Bash(git checkout main)",
+      "Bash(git merge feature/compose-detail-panel)",
+      "Bash(git push origin main)"
     ]
   }
 }
