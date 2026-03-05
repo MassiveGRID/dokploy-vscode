@@ -21,7 +21,7 @@ export class DashboardPanel {
 
     const panel = vscode.window.createWebviewPanel(
       "dokploy.dashboard",
-      "Dokploy Dashboard",
+      "MassiveGRID Dashboard",
       vscode.ViewColumn.One,
       {
         enableScripts: true,
@@ -302,7 +302,7 @@ export class DashboardPanel {
 <body>
   <div class="header">
     <div>
-      <h1>Dokploy Dashboard</h1>
+      <h1>MassiveGRID Dashboard</h1>
       <div class="server-info">Connected to <strong>${serverName}</strong> — ${serverUrl}</div>
     </div>
     <div>
@@ -375,8 +375,8 @@ export class DashboardPanel {
   private getNoServerHtml(): string {
     return `<!DOCTYPE html><html><body style="display:flex;align-items:center;justify-content:center;height:100vh;font-family:var(--vscode-font-family);color:var(--vscode-editor-foreground);">
       <div style="text-align:center">
-        <h2>No Dokploy Server Connected</h2>
-        <p>Add a server first using the Dokploy sidebar.</p>
+        <h2>No MassiveGRID Server Connected</h2>
+        <p>Add a server first using the MassiveGRID sidebar.</p>
       </div>
     </body></html>`;
   }

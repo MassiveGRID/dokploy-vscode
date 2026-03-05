@@ -1,8 +1,8 @@
 {
-   "name": "dokploy-vscode",
-   "displayName": "Dokploy - Deploy & Manage",
-   "description": "Deploy your code to Dokploy servers directly from VS Code. Create services, manage deployments, view logs, and configure domains.",
-   "version": "1.6.7",
+   "name": "mg-autodeploy-vscode",
+   "displayName": "MassiveGRID Autodeploy - Deploy & Manage",
+   "description": "Deploy your code to MassiveGRID servers directly from VS Code. Create services, manage deployments, view logs, and configure domains.",
+   "version": "1.6.9",
    "publisher": "MassiveGRID",
    "license": "MIT",
    "engines": {
@@ -33,7 +33,7 @@
          "activitybar": [
             {
                "id": "dokploy",
-               "title": "Dokploy",
+               "title": "MassiveGRID",
                "icon": "media/dokploy.svg"
             }
          ]
@@ -53,189 +53,189 @@
       "commands": [
          {
             "command": "dokploy.addServer",
-            "title": "Add Dokploy Server",
+            "title": "Add MassiveGRID Server",
             "icon": "$(add)",
-            "category": "Dokploy"
+            "category": "MassiveGRID"
          },
          {
             "command": "dokploy.removeServer",
             "title": "Remove Server",
             "icon": "$(trash)",
-            "category": "Dokploy"
+            "category": "MassiveGRID"
          },
          {
             "command": "dokploy.refreshProjects",
             "title": "Refresh Projects",
             "icon": "$(refresh)",
-            "category": "Dokploy"
+            "category": "MassiveGRID"
          },
          {
             "command": "dokploy.deploy",
-            "title": "Deploy to Dokploy",
+            "title": "Deploy to MassiveGRID",
             "icon": "$(rocket)",
-            "category": "Dokploy"
+            "category": "MassiveGRID"
          },
          {
             "command": "dokploy.createProject",
             "title": "Create Project",
             "icon": "$(new-folder)",
-            "category": "Dokploy"
+            "category": "MassiveGRID"
          },
          {
             "command": "dokploy.createApplication",
             "title": "Create Application",
             "icon": "$(file-add)",
-            "category": "Dokploy"
+            "category": "MassiveGRID"
          },
          {
             "command": "dokploy.viewLogs",
             "title": "View Logs",
             "icon": "$(output)",
-            "category": "Dokploy"
+            "category": "MassiveGRID"
          },
          {
             "command": "dokploy.startApp",
             "title": "Start Application",
             "icon": "$(debug-start)",
-            "category": "Dokploy"
+            "category": "MassiveGRID"
          },
          {
             "command": "dokploy.stopApp",
             "title": "Stop Application",
             "icon": "$(debug-stop)",
-            "category": "Dokploy"
+            "category": "MassiveGRID"
          },
          {
             "command": "dokploy.redeployApp",
             "title": "Redeploy Application",
             "icon": "$(sync)",
-            "category": "Dokploy"
+            "category": "MassiveGRID"
          },
          {
             "command": "dokploy.manageEnvVars",
             "title": "Manage Environment Variables",
             "icon": "$(symbol-variable)",
-            "category": "Dokploy"
+            "category": "MassiveGRID"
          },
          {
             "command": "dokploy.manageDomains",
             "title": "Manage Domains",
             "icon": "$(globe)",
-            "category": "Dokploy"
+            "category": "MassiveGRID"
          },
          {
             "command": "dokploy.openInBrowser",
             "title": "Open in Browser",
             "icon": "$(link-external)",
-            "category": "Dokploy"
+            "category": "MassiveGRID"
          },
          {
             "command": "dokploy.openDashboard",
-            "title": "Dokploy Dashboard",
+            "title": "MassiveGRID Dashboard",
             "icon": "$(browser)",
-            "category": "Dokploy"
+            "category": "MassiveGRID"
          },
          {
             "command": "dokploy.quickDeploy",
             "title": "Quick Deploy Current Workspace",
             "icon": "$(cloud-upload)",
-            "category": "Dokploy"
+            "category": "MassiveGRID"
          },
          {
             "command": "dokploy.pushAndDeploy",
             "title": "Push & Deploy",
             "icon": "$(git-push)",
-            "category": "Dokploy"
+            "category": "MassiveGRID"
          },
          {
             "command": "dokploy.createCompose",
             "title": "Create Compose Service",
             "icon": "$(layers)",
-            "category": "Dokploy"
+            "category": "MassiveGRID"
          },
          {
             "command": "dokploy.editComposeFile",
             "title": "Edit Compose File",
             "icon": "$(edit)",
-            "category": "Dokploy"
+            "category": "MassiveGRID"
          },
          {
             "command": "dokploy.deployCompose",
             "title": "Deploy Compose",
             "icon": "$(rocket)",
-            "category": "Dokploy"
+            "category": "MassiveGRID"
          },
          {
             "command": "dokploy.startCompose",
             "title": "Start Compose",
             "icon": "$(debug-start)",
-            "category": "Dokploy"
+            "category": "MassiveGRID"
          },
          {
             "command": "dokploy.stopCompose",
             "title": "Stop Compose",
             "icon": "$(debug-stop)",
-            "category": "Dokploy"
+            "category": "MassiveGRID"
          },
          {
             "command": "dokploy.redeployCompose",
             "title": "Redeploy Compose",
             "icon": "$(sync)",
-            "category": "Dokploy"
+            "category": "MassiveGRID"
          },
          {
             "command": "dokploy.browseTemplates",
             "title": "Browse Templates",
             "icon": "$(package)",
-            "category": "Dokploy"
+            "category": "MassiveGRID"
          },
          {
             "command": "dokploy.deleteProject",
             "title": "Delete Project",
             "icon": "$(trash)",
-            "category": "Dokploy"
+            "category": "MassiveGRID"
          },
          {
             "command": "dokploy.viewDeploymentLog",
             "title": "View Deployment Log",
             "icon": "$(list-ordered)",
-            "category": "Dokploy"
+            "category": "MassiveGRID"
          },
          {
             "command": "dokploy.syncEnvToLocal",
             "title": "Sync Server Env → Local .env",
             "icon": "$(cloud-download)",
-            "category": "Dokploy"
+            "category": "MassiveGRID"
          },
          {
             "command": "dokploy.copyDbConnectionString",
             "title": "Copy Connection String",
             "icon": "$(clippy)",
-            "category": "Dokploy"
+            "category": "MassiveGRID"
          },
          {
             "command": "dokploy.startDatabase",
             "title": "Start Database",
             "icon": "$(debug-start)",
-            "category": "Dokploy"
+            "category": "MassiveGRID"
          },
          {
             "command": "dokploy.stopDatabase",
             "title": "Stop Database",
             "icon": "$(debug-stop)",
-            "category": "Dokploy"
+            "category": "MassiveGRID"
          },
          {
             "command": "dokploy.openAppDetail",
             "title": "Open Application Details",
             "icon": "$(window)",
-            "category": "Dokploy"
+            "category": "MassiveGRID"
          },
          {
             "command": "dokploy.openComposeDetail",
             "title": "Open Compose Details",
             "icon": "$(window)",
-            "category": "Dokploy"
+            "category": "MassiveGRID"
          }
       ],
       "menus": {
@@ -399,7 +399,7 @@
          ]
       },
       "configuration": {
-         "title": "Dokploy",
+         "title": "MassiveGRID",
          "properties": {
             "dokploy.defaultBuildType": {
                "type": "string",

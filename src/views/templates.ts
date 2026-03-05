@@ -47,7 +47,7 @@ export class TemplatesPanel {
 
     const panel = vscode.window.createWebviewPanel(
       "dokploy.templates",
-      "Dokploy Templates",
+      "MassiveGRID Templates",
       vscode.ViewColumn.One,
       {
         enableScripts: true,
@@ -99,7 +99,7 @@ export class TemplatesPanel {
   private async handleDeploy(templateId: string, templateName: string) {
     const client = this.serverManager.getActiveClient();
     if (!client) {
-      vscode.window.showErrorMessage("No Dokploy server configured.");
+      vscode.window.showErrorMessage("No MassiveGRID server configured.");
       return;
     }
 
@@ -396,8 +396,8 @@ export class TemplatesPanel {
   private getNoServerHtml(): string {
     return `<!DOCTYPE html><html><body style="display:flex;align-items:center;justify-content:center;height:100vh;font-family:var(--vscode-font-family);color:var(--vscode-editor-foreground);">
       <div style="text-align:center">
-        <h2>No Dokploy Server Connected</h2>
-        <p>Add a server first using the Dokploy sidebar.</p>
+        <h2>No MassiveGRID Server Connected</h2>
+        <p>Add a server first using the MassiveGRID sidebar.</p>
       </div>
     </body></html>`;
   }

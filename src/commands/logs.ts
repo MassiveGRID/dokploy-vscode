@@ -18,7 +18,7 @@ export function registerLogCommands(
       async (item?: ApplicationTreeItem | ComposeTreeItem) => {
         const client = serverManager.getActiveClient();
         if (!client) {
-          vscode.window.showErrorMessage("No Dokploy server configured.");
+          vscode.window.showErrorMessage("No MassiveGRID server configured.");
           return;
         }
 
@@ -78,7 +78,7 @@ export function registerLogCommands(
           serviceType = picked.type;
         }
 
-        const channelName = `Dokploy: ${serviceName}`;
+        const channelName = `MassiveGRID: ${serviceName}`;
 
         // Reuse or create output channel
         let channel = outputChannels.get(serviceId);
@@ -247,7 +247,7 @@ export function registerLogCommands(
       async (item?: ApplicationTreeItem | ComposeTreeItem) => {
         const client = serverManager.getActiveClient();
         if (!client) {
-          vscode.window.showErrorMessage("No Dokploy server configured.");
+          vscode.window.showErrorMessage("No MassiveGRID server configured.");
           return;
         }
 

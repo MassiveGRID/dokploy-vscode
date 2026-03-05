@@ -151,11 +151,11 @@ function updateStatusBar(serverManager: ServerManager): void {
   if (!statusBarItem) return;
   const active = serverManager.getActiveServer();
   if (active) {
-    statusBarItem.text = `$(cloud-upload) Dokploy: ${active.name}`;
+    statusBarItem.text = `$(cloud-upload) MassiveGRID: ${active.name}`;
     statusBarItem.tooltip = `Deploy to ${active.name} (${active.url}).\nClick to quick deploy.`;
   } else {
-    statusBarItem.text = "$(cloud-upload) Dokploy";
-    statusBarItem.tooltip = "Click to set up Dokploy";
+    statusBarItem.text = "$(cloud-upload) MassiveGRID";
+    statusBarItem.tooltip = "Click to set up MassiveGRID";
   }
 }
 

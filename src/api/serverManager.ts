@@ -47,7 +47,7 @@ export class ServerManager {
     if (!name) return;
 
     const url = await vscode.window.showInputBox({
-      prompt: "Dokploy server URL",
+      prompt: "MassiveGRID server URL",
       placeHolder: "https://your-server.com:3000",
       ignoreFocusOut: true,
       validateInput: (v) => {
@@ -63,7 +63,7 @@ export class ServerManager {
     if (!url) return;
 
     const apiKey = await vscode.window.showInputBox({
-      prompt: "API Key (from Dokploy Settings > API Keys)",
+      prompt: "API Key (from Settings > API Keys)",
       password: true,
       ignoreFocusOut: true,
       validateInput: (v) => (v.trim() ? null : "API key is required"),
@@ -85,7 +85,7 @@ export class ServerManager {
     // Test connection
     const client = new DokployClient(server);
     const statusMessage = vscode.window.setStatusBarMessage(
-      "$(loading~spin) Testing connection to Dokploy..."
+      "$(loading~spin) Testing connection to MassiveGRID..."
     );
 
     try {
@@ -94,7 +94,7 @@ export class ServerManager {
 
       if (!connected) {
         const retry = await vscode.window.showErrorMessage(
-          "Could not connect to Dokploy server. Check your URL and API key.",
+          "Could not connect to MassiveGRID server. Check your URL and API key.",
           "Retry",
           "Save Anyway"
         );
@@ -104,7 +104,7 @@ export class ServerManager {
         if (retry !== "Save Anyway") return;
       } else {
         vscode.window.showInformationMessage(
-          `Connected to Dokploy server: ${server.name}`
+          `Connected to MassiveGRID server: ${server.name}`
         );
       }
     } catch (err: any) {

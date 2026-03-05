@@ -17,7 +17,7 @@ export function registerDeployCommands(
       async (item?: ApplicationTreeItem) => {
         const client = serverManager.getActiveClient();
         if (!client) {
-          vscode.window.showErrorMessage("No Dokploy server configured.");
+          vscode.window.showErrorMessage("No MassiveGRID server configured.");
           return;
         }
 
@@ -179,7 +179,7 @@ export function registerDeployCommands(
             // Ask for git repo URL
             const repoUrl = await vscode.window.showInputBox({
               prompt:
-                "Git repository URL (Dokploy will pull code from here)",
+                "Git repository URL (MassiveGRID will pull code from here)",
               placeHolder: "https://github.com/user/repo.git",
               value: await getGitRemoteUrl(workspacePath),
               ignoreFocusOut: true,

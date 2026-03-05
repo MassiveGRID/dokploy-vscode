@@ -166,7 +166,7 @@ export function registerEnvAndDomainCommands(
             },
             {
               label: "$(zap) Generate Auto Domain",
-              description: "Let Dokploy generate a domain",
+              description: "Let MassiveGRID generate a domain",
             },
             ...domains.map((d) => ({
               label: `${d.https ? "$(lock)" : "$(unlock)"} ${d.host}`,

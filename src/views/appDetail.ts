@@ -58,7 +58,7 @@ export class AppDetailPanel {
   async loadAndRender() {
     const client = this.serverManager.getActiveClient();
     if (!client) {
-      this.panel.webview.html = this.errorHtml("No Dokploy server connected.");
+      this.panel.webview.html = this.errorHtml("No MassiveGRID server connected.");
       return;
     }
 
@@ -845,7 +845,7 @@ export class AppDetailPanel {
       <div class="card-title">ℹ About Volume Backups</div>
       <p style="font-size:13px;color:var(--muted);line-height:1.6;">
         Volume backups allow you to automatically back up application data to S3-compatible storage.
-        Configure backup destinations in the Dokploy web dashboard under Settings → Destinations,
+        Configure backup destinations in the MassiveGRID web dashboard under Settings → Destinations,
         then set up backup schedules here.
       </p>
     </div>

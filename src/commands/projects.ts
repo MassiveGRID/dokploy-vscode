@@ -42,7 +42,7 @@ export function registerProjectCommands(
     vscode.commands.registerCommand("dokploy.createProject", async () => {
       const client = serverManager.getActiveClient();
       if (!client) {
-        vscode.window.showErrorMessage("No Dokploy server configured.");
+        vscode.window.showErrorMessage("No MassiveGRID server configured.");
         return;
       }
 
@@ -79,7 +79,7 @@ export function registerProjectCommands(
       async (item?: ProjectTreeItem) => {
         const client = serverManager.getActiveClient();
         if (!client) {
-          vscode.window.showErrorMessage("No Dokploy server configured.");
+          vscode.window.showErrorMessage("No MassiveGRID server configured.");
           return;
         }
 

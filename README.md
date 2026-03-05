@@ -1,71 +1,92 @@
-# Dokploy - Deploy & Manage
+# MassiveGRID Autodeploy - Deploy & Manage
 
-A Visual Studio Code extension that allows you to deploy your code to Dokploy servers directly from VS Code. Create services, manage deployments, view logs, and configure domains seamlessly.
+Deploy your code to MassiveGRID servers directly from VS Code. Create services, manage deployments, view logs, and configure domains — all without leaving your editor.
 
 ## Features
 
-- **Server Management**: Connect and manage your Dokploy servers
-- **Project & Service Management**: Create and manage projects and services
-- **Deployment**: Deploy your code with ease
-- **Logs Viewing**: Monitor deployment logs in real-time
-- **Environment & Domains**: Configure environment variables and domains
-- **Push Deploy**: Quick deployment from your workspace
-- **Docker Compose Support**: Work with Docker Compose files
+- **Server Management** — Connect and manage multiple MassiveGRID servers
+- **Project & Service Management** — Create and manage projects, applications, and compose services
+- **One-Click Deploy** — Deploy your code with a single click or via Push & Deploy
+- **Application Details** — Full tabbed panel with General, Environment, Domains, Deployments, Logs, Monitoring, and more
+- **Compose Support** — Create, edit, and deploy Docker Compose services
+- **Database Management** — Start, stop, and copy connection strings for PostgreSQL, MySQL, MariaDB, MongoDB, and Redis
+- **Environment Variables** — Edit and sync environment variables between server and local `.env` files
+- **Domain Management** — Configure custom domains with SSL/TLS support
+- **Real-Time Logs** — Stream deployment and application logs directly in VS Code
+- **Templates Marketplace** — Browse and deploy pre-built application templates
 
-## Installation
+## Getting Started
 
-### From VS Code Marketplace
+### Installation
 
 1. Open VS Code
-2. Go to Extensions (Ctrl+Shift+X)
-3. Search for "Dokploy - Deploy & Manage"
-4. Click Install
+2. Go to Extensions (`Ctrl+Shift+X` / `Cmd+Shift+X`)
+3. Search for **"MassiveGRID Autodeploy"**
+4. Click **Install**
 
-### From Source
+### Connect Your Server
 
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/Massivegrid/dokploy-vscode.git
-   cd dokploy-vscode
-   ```
-
-2. Install dependencies:
-   ```bash
-   npm install
-   ```
-
-3. Compile the extension:
-   ```bash
-   npm run compile
-   ```
-
-4. Install the extension in VS Code:
-   - Open VS Code
-   - Go to Extensions > Install from VSIX
-   - Select the generated `.vsix` file
+1. Click the **MG** icon in the Activity Bar
+2. Click the **+** button to add a server
+3. Enter your server URL and API key (found in Settings > API Keys on your MassiveGRID dashboard)
 
 ## Usage
 
-After installation, you'll see the Dokploy icon in the Activity Bar. Click it to access:
+After connecting a server, you'll see two panels in the sidebar:
 
-- **Servers**: Manage your Dokploy servers
-- **Projects & Services**: View and manage your projects and services
+- **Servers** — Your connected MassiveGRID servers
+- **Projects & Services** — Browse projects, applications, compose services, and databases
 
-Use the command palette (Ctrl+Shift+P) to access Dokploy commands:
-- `Dokploy: Deploy`
-- `Dokploy: View Logs`
-- `Dokploy: Configure Domains`
+### Quick Actions
+
+| Action | How |
+|--------|-----|
+| Deploy an application | Right-click an app > **Deploy** |
+| Push & Deploy | Right-click an app > **Push & Deploy** (git push + deploy) |
+| View logs | Right-click an app > **View Logs** |
+| Open app details | Click the app name or right-click > **Open Application Details** |
+| Manage environment | Right-click an app > **Manage Environment Variables** |
+| Manage domains | Right-click an app > **Manage Domains** |
+
+### Command Palette
+
+All commands are available via the Command Palette (`Ctrl+Shift+P` / `Cmd+Shift+P`) under the **MassiveGRID** category:
+
+- `MassiveGRID: Deploy to MassiveGRID`
+- `MassiveGRID: Push & Deploy`
+- `MassiveGRID: View Logs`
+- `MassiveGRID: Manage Domains`
+- `MassiveGRID: Quick Deploy Current Workspace`
 - And more...
+
+### Application Detail Panel
+
+Click any application to open its full detail panel with 10 tabs:
+
+- **General** — App info, build settings, source configuration
+- **Environment** — Environment variables and build args
+- **Domains** — Custom domain and SSL configuration
+- **Deployments** — Deployment history with logs
+- **Preview Deployments** — Manage preview environments
+- **Schedules** — Cron-based scheduled tasks
+- **Volume Backups** — Automated backups to S3-compatible storage
+- **Logs** — Real-time application logs
+- **Monitoring** — CPU, memory, and network metrics
+- **Advanced** — Replicas, resource limits, Traefik config
 
 ## Requirements
 
 - VS Code 1.109.0 or higher
-- A Dokploy server instance
+- A [MassiveGRID](https://massivegrid.com/dokploy-hosting/) server with API access enabled
+
+## Extension Settings
+
+| Setting | Description | Default |
+|---------|-------------|---------|
+| `dokploy.defaultBuildType` | Default build type for new applications | `nixpacks` |
+| `dokploy.autoDetectProjectType` | Auto-detect project type and configure build settings | `true` |
+| `dokploy.showStatusBar` | Show deployment status in the status bar | `true` |
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## Repository
-
-[GitHub Repository](https://github.com/Massivegrid/dokploy-vscode)
+[MIT](LICENSE)

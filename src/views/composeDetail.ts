@@ -57,7 +57,7 @@ export class ComposeDetailPanel {
   async loadAndRender() {
     const client = this.serverManager.getActiveClient();
     if (!client) {
-      this.panel.webview.html = this.errorHtml("No Dokploy server connected.");
+      this.panel.webview.html = this.errorHtml("No MassiveGRID server connected.");
       return;
     }
 
@@ -561,7 +561,7 @@ export class ComposeDetailPanel {
     <div class="card" style="background: rgba(59,130,246,0.05); border-color: rgba(59,130,246,0.2);">
       <div class="card-title">ℹ Compose ID</div>
       <p style="font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:8px;">
-        Use this ID when referencing this service via the Dokploy API.
+        Use this ID when referencing this service via the MassiveGRID API.
       </p>
       <code style="display:block;padding:8px;border-radius:4px;">${esc(compose.composeId)}</code>
     </div>

@@ -3,7 +3,9 @@
 .claude/**
 src/**
 node_modules/**
+scripts/**
 .gitignore
 tsconfig.json
+CLAUDE.md
 **/*.ts
 **/*.map

@@ -15,7 +15,7 @@ export function registerPushDeployCommands(
       async (item?: ApplicationTreeItem) => {
         const client = serverManager.getActiveClient();
         if (!client) {
-          vscode.window.showErrorMessage("No Dokploy server configured.");
+          vscode.window.showErrorMessage("No MassiveGRID server configured.");
           return;
         }
 

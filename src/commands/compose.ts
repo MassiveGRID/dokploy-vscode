@@ -17,7 +17,7 @@ export function registerComposeCommands(
       async (item?: ProjectTreeItem) => {
         const client = serverManager.getActiveClient();
         if (!client) {
-          vscode.window.showErrorMessage("No Dokploy server configured.");
+          vscode.window.showErrorMessage("No MassiveGRID server configured.");
           return;
         }
 
@@ -154,7 +154,7 @@ export function registerComposeCommands(
                 try {
                   await client.saveComposeFile(composeId, newContent);
                   vscode.window.showInformationMessage(
-                    "Compose file saved to Dokploy!"
+                    "Compose file saved to MassiveGRID!"
                   );
                 } catch (err: any) {
                   vscode.window.showErrorMessage(
