@@ -15,6 +15,16 @@ Deploy your code to MassiveGRID servers directly from VS Code. Create services, 
 - **Real-Time Logs** — Stream deployment and application logs directly in VS Code
 - **Templates Marketplace** — Browse and deploy pre-built application templates
 
+## Screenshots
+
+![Screenshot 1](assets/Screenshot%202026-03-05%20at%2015.48.06.png)
+![Screenshot 2](assets/Screenshot%202026-03-05%20at%2015.48.26.png)
+![Screenshot 3](assets/Screenshot%202026-03-05%20at%2015.48.52.png)
+![Screenshot 4](assets/Screenshot%202026-03-05%20at%2015.49.22.png)
+![Screenshot 5](assets/Screenshot%202026-03-05%20at%2015.50.48.png)
+![Screenshot 6](assets/Screenshot%202026-03-05%20at%2015.51.06.png)
+![Screenshot 7](assets/Screenshot%202026-03-05%20at%2015.51.34.png)
+
 ## Getting Started
 
 ### Installation
@@ -74,10 +84,12 @@ Click any application to open its full detail panel with 10 tabs:
 - **Monitoring** — CPU, memory, and network metrics
 - **Advanced** — Replicas, resource limits, Traefik config
 
-## Requirements
+## ⚠️ Requirements
 
-- VS Code 1.109.0 or higher
-- A [MassiveGRID](https://massivegrid.com/dokploy-hosting/) server with API access enabled
+> **Important**: Ensure you have the following prerequisites:
+
+- **VS Code 1.109.0 or higher** - Required for full compatibility
+- **A [MassiveGRID](https://portal.massivegrid.com/index.php/store/ha-cloud-servers/2025-ha-cloud-vps-in-new-york?configoption%5B3233%5D=8025548&configoption%5B3241%5D=2&configoption%5B3237%5D=4&configoption%5B3238%5D=96) server** with API access enabled
 
 ## Extension Settings
 
