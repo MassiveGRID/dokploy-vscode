@@ -1,16 +1,16 @@
 {
    "name": "mg-autodeploy-vscode",
-   "displayName": "MassiveGRID Autodeploy - Deploy & Manage",
+   "displayName": "Cloud Hosting Deploy & Manage by MassiveGRID",
    "description": "Deploy your code to MassiveGRID servers directly from VS Code. Create services, manage deployments, view logs, and configure domains.",
-   "version": "1.6.9",
+   "version": "0.0.1",
+   "preview": true,
    "publisher": "MassiveGRID",
    "license": "MIT",
    "engines": {
       "vscode": "^1.109.0"
    },
    "categories": [
-      "Other",
-      "Deployment"
+      "Other"
    ],
    "keywords": [
       "dokploy",

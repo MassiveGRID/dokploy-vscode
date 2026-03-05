@@ -1,4 +1,4 @@
-# MassiveGRID Autodeploy - Deploy & Manage
+# Cloud Hosting Deploy & Manage by MassiveGRID
 
 Deploy your code to MassiveGRID servers directly from VS Code. Create services, manage deployments, view logs, and configure domains — all without leaving your editor.
 
