@@ -1,40 +1,42 @@
 # Changelog
 
-All notable changes to the MassiveGRID Autodeploy extension will be documented in this file.
+All notable changes to the Cloud Hosting Deploy & Manage by MassiveGRID extension will be documented in this file.
 
-## [1.6.8] - 2026-03-05
+## [0.0.3] - 2026-03-06
+
+### Fixed
+- Updated marketplace search text to match new display name
+- Improved README documentation with VS Code Web section and requirements
 
 ### Changed
-- Rebranded extension to MassiveGRID across all UI elements
-- New MassiveGRID extension icon and activity bar icon
-- Updated all user-facing strings, labels, and messages
+- Updated README and CHANGELOG to reflect fresh versioning from v0.0.1
 
-## [1.6.7] - 2026-03-04
+## [0.0.2] - 2026-03-06
 
 ### Added
-- Domains tab in Application and Compose detail panels
-- Improved tab interactivity in detail panels
+- VS Code Web support (vscode.dev and GitHub Codespaces)
+- Browser entry point with fetch-based API client
 
-## [1.6.0] - 2026-03-03
+### Fixed
+- Refresh icon sizing in webview panels
+- Screenshot images not loading on VS Code Marketplace
 
-### Added
-- Compose Detail panel with full tabbed interface
-- Compose domain management
+### Changed
+- Replaced Node.js http/https with fetch API for cross-platform compatibility
+- Updated README with VS Code Web documentation
 
-## [1.3.0] - 2026-03-01
-
-### Added
-- Database commands (start, stop, copy connection string)
-- Application Detail panel with 10 tabs: General, Environment, Domains, Deployments, Preview Deployments, Schedules, Volume Backups, Logs, Monitoring, Advanced
-
-## [1.0.0] - 2026-02-15
+## [0.0.1] - 2026-03-05
 
 ### Added
-- Initial release
+- Initial public release on VS Code Marketplace
 - Server management (add, remove, switch active server)
 - Project and application management
 - Deploy, start, stop, redeploy applications
 - Push & Deploy workflow (git push + deploy)
+- Application Detail panel with 10 tabs: General, Environment, Domains, Deployments, Preview Deployments, Schedules, Volume Backups, Logs, Monitoring, Advanced
+- Compose Detail panel with full tabbed interface
+- Compose domain management
+- Database commands (start, stop, copy connection string)
 - Environment variable management with local .env sync
 - Domain management with SSL support
 - Real-time log streaming

@@ -2,7 +2,7 @@
    "name": "mg-autodeploy-vscode",
    "displayName": "Cloud Hosting Deploy & Manage by MassiveGRID",
    "description": "Deploy your code to MassiveGRID servers directly from VS Code. Create services, manage deployments, view logs, and configure domains.",
-   "version": "0.0.2",
+   "version": "0.0.3",
    "preview": true,
    "publisher": "MassiveGRID",
    "license": "MIT",
@@ -28,6 +28,7 @@
    },
    "activationEvents": [],
    "main": "./dist/extension.js",
+   "browser": "./dist/web-extension.js",
    "contributes": {
       "viewsContainers": {
          "activitybar": [
@@ -428,7 +429,9 @@
    },
    "scripts": {
       "vscode:prepublish": "npm run build",
-      "build": "esbuild ./src/extension.ts --bundle --outfile=dist/extension.js --external:vscode --format=cjs --platform=node --minify",
+      "build": "npm run build:node && npm run build:web",
+      "build:node": "esbuild ./src/extension.ts --bundle --outfile=dist/extension.js --external:vscode --format=cjs --platform=node --minify",
+      "build:web": "node build-web.js",
       "watch": "esbuild ./src/extension.ts --bundle --outfile=dist/extension.js --external:vscode --format=cjs --platform=node --watch",
       "lint": "tsc --noEmit"
    },

@@ -1,30 +1,15 @@
 import * as vscode from "vscode";
-import * as https from "https";
 import { ServerManager } from "../api/serverManager";
 import { TemplateMetadata } from "../api/client";
 
 const TEMPLATES_BASE_URL = "https://templates.dokploy.com";
 
-function fetchTemplatesCatalog(): Promise<TemplateMetadata[]> {
-  return new Promise((resolve, reject) => {
-    https
-      .get(`${TEMPLATES_BASE_URL}/meta.json`, (res) => {
-        let data = "";
-        res.on("data", (chunk) => (data += chunk));
-        res.on("end", () => {
-          try {
-            if (res.statusCode && res.statusCode >= 400) {
-              reject(new Error(`HTTP ${res.statusCode}: ${res.statusMessage}`));
-              return;
-            }
-            resolve(JSON.parse(data) as TemplateMetadata[]);
-          } catch {
-            reject(new Error("Failed to parse templates catalog"));
-          }
-        });
-      })
-      .on("error", reject);
-  });
+async function fetchTemplatesCatalog(): Promise<TemplateMetadata[]> {
+  const res = await fetch(`${TEMPLATES_BASE_URL}/meta.json`);
+  if (!res.ok) {
+    throw new Error(`HTTP ${res.status}: ${res.statusText}`);
+  }
+  return (await res.json()) as TemplateMetadata[];
 }
 
 export class TemplatesPanel {

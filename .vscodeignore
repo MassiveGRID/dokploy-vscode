@@ -7,5 +7,7 @@ scripts/**
 .gitignore
 tsconfig.json
 CLAUDE.md
+build-web.js
+assets/**
 **/*.ts
 **/*.map

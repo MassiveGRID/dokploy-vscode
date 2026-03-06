@@ -546,11 +546,11 @@ export class AppDetailPanel {
     <span style="color:var(--muted);font-size:12px;margin-left:4px;">${esc(app.appName || "")}</span>
     <div class="header-actions">
       <button onclick="send('deploy')" class="success">▶ Deploy</button>
-      <button onclick="send('redeploy')" class="secondary">↻ Redeploy</button>
+      <button onclick="send('redeploy')" class="secondary"><span style="font-size:11px">↻</span> Redeploy</button>
       ${status === "running" || status === "done"
         ? `<button onclick="send('stop')" class="danger">⏹ Stop</button>`
         : `<button onclick="send('start')">▶ Start</button>`}
-      <button onclick="send('refresh')" class="secondary">↻ Refresh</button>
+      <button onclick="send('refresh')" class="secondary"><span style="font-size:11px">↻</span> Refresh</button>
     </div>
   </div>
 
@@ -725,7 +725,7 @@ export class AppDetailPanel {
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
         <div class="card-title" style="margin:0">Deployment History</div>
         <div style="display:flex;gap:8px;">
-          <button class="secondary" onclick="send('refreshDeployments')">↻ Refresh</button>
+          <button class="secondary" onclick="send('refreshDeployments')"><span style="font-size:11px">↻</span> Refresh</button>
           <button class="danger" onclick="send('cancelDeployment')">✕ Cancel Running</button>
         </div>
       </div>
@@ -781,7 +781,7 @@ export class AppDetailPanel {
     <div class="card">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
         <div class="card-title" style="margin:0">Active Previews</div>
-        <button class="secondary" onclick="send('loadPreviews')">↻ Load</button>
+        <button class="secondary" onclick="send('loadPreviews')"><span style="font-size:11px">↻</span> Load</button>
       </div>
       <div id="previews-list">
         <div class="empty"><div class="empty-icon">🔍</div>Click "Load" to fetch preview deployments</div>
@@ -794,7 +794,7 @@ export class AppDetailPanel {
     <div class="card">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
         <div class="card-title" style="margin:0">Scheduled Jobs</div>
-        <button class="secondary" onclick="send('loadSchedules')">↻ Load</button>
+        <button class="secondary" onclick="send('loadSchedules')"><span style="font-size:11px">↻</span> Load</button>
       </div>
       <div id="schedules-list">
         <div class="empty"><div class="empty-icon">🕐</div>Click "Load" to fetch schedules</div>
@@ -835,7 +835,7 @@ export class AppDetailPanel {
     <div class="card">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
         <div class="card-title" style="margin:0">Backup Configurations</div>
-        <button class="secondary" onclick="send('loadBackups')">↻ Load</button>
+        <button class="secondary" onclick="send('loadBackups')"><span style="font-size:11px">↻</span> Load</button>
       </div>
       <div id="backups-list">
         <div class="empty"><div class="empty-icon">💾</div>Click "Load" to fetch backup configurations</div>
@@ -857,7 +857,7 @@ export class AppDetailPanel {
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
         <div class="card-title" style="margin:0">Container Logs</div>
         <div style="display:flex;gap:8px;">
-          <button class="secondary" onclick="loadLogs()">↻ Load Logs</button>
+          <button class="secondary" onclick="loadLogs()"><span style="font-size:11px">↻</span> Load Logs</button>
           <button class="secondary" onclick="clearLogs()">✕ Clear</button>
         </div>
       </div>
@@ -880,7 +880,7 @@ export class AppDetailPanel {
   <div id="tab-monitoring" class="tab-pane">
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
       <h3 style="font-size:15px;">Resource Monitoring</h3>
-      <button class="secondary" onclick="loadMonitoring()">↻ Refresh</button>
+      <button class="secondary" onclick="loadMonitoring()"><span style="font-size:11px">↻</span> Refresh</button>
     </div>
     <div id="monitoring-content">
       <div class="empty"><div class="empty-icon">📊</div>Click "Refresh" to load monitoring data</div>
@@ -1233,7 +1233,7 @@ function renderPreviewsJS(previews) {
       <td>\${statusDot(p.previewStatus || p.applicationStatus)}\${esc(p.previewStatus || p.applicationStatus || 'unknown')}</td>
       <td>\${p.domain ? \`<a href="#" onclick="send('openExternal',{url:'\${esc(p.domain)}'})">\${esc(p.domain)}</a>\` : '—'}</td>
       <td class="td-actions">
-        <button class="secondary small" title="Redeploy" onclick="redeployPreview('\${esc(p.previewDeploymentId)}')">↻ Redeploy</button>
+        <button class="secondary small" title="Redeploy" onclick="redeployPreview('\${esc(p.previewDeploymentId)}')"><span style="font-size:11px">↻</span> Redeploy</button>
         <button class="danger small" onclick="deletePreview('\${esc(p.previewDeploymentId)}')">Delete</button>
       </td>
     </tr>\`).join('')}</tbody>

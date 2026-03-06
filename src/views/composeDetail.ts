@@ -353,11 +353,11 @@ export class ComposeDetailPanel {
     <span style="color:var(--muted);font-size:12px;margin-left:4px;">${esc(compose.appName || "")}</span>
     <div class="header-actions">
       <button onclick="send('deploy')" class="success">▶ Deploy</button>
-      <button onclick="send('redeploy')" class="secondary">↻ Redeploy</button>
+      <button onclick="send('redeploy')" class="secondary"><span style="font-size:11px">↻</span> Redeploy</button>
       ${status === "running" || status === "done"
         ? `<button onclick="send('stop')" class="danger">⏹ Stop</button>`
         : `<button onclick="send('start')">▶ Start</button>`}
-      <button onclick="send('refresh')" class="secondary">↻ Refresh</button>
+      <button onclick="send('refresh')" class="secondary"><span style="font-size:11px">↻</span> Refresh</button>
     </div>
   </div>
 
@@ -474,7 +474,7 @@ export class ComposeDetailPanel {
         <div class="card-title" style="margin:0">Domains</div>
         <div style="display:flex;gap:8px;">
           <button class="secondary" onclick="send('generateDomain')">⚡ Generate Auto Domain</button>
-          <button class="secondary" onclick="send('loadDomains')">↻ Refresh</button>
+          <button class="secondary" onclick="send('loadDomains')"><span style="font-size:11px">↻</span> Refresh</button>
         </div>
       </div>
       <div id="domains-list">${renderDomains(JSON.parse(domainsJson))}</div>
@@ -516,7 +516,7 @@ export class ComposeDetailPanel {
     <div class="card">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
         <div class="card-title" style="margin:0">Deployment History</div>
-        <button class="secondary" onclick="send('refreshDeployments')">↻ Refresh</button>
+        <button class="secondary" onclick="send('refreshDeployments')"><span style="font-size:11px">↻</span> Refresh</button>
       </div>
       <div id="deployments-list">${renderDeployments(JSON.parse(deploymentsJson))}</div>
     </div>
@@ -535,7 +535,7 @@ export class ComposeDetailPanel {
   <div id="tab-monitoring" class="tab-pane">
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
       <h3 style="font-size:15px;">Resource Monitoring</h3>
-      <button class="secondary" onclick="loadMonitoring()">↻ Refresh</button>
+      <button class="secondary" onclick="loadMonitoring()"><span style="font-size:11px">↻</span> Refresh</button>
     </div>
     <div id="monitoring-content">
       <div class="empty"><div class="empty-icon">📊</div>Click "Refresh" to load monitoring data</div>

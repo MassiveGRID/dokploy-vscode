@@ -1,7 +1,3 @@
-import * as https from "https";
-import * as http from "http";
-import { URL } from "url";
-
 export interface DokployServer {
   name: string;
   url: string;
@@ -120,59 +116,42 @@ export class DokployClient {
     path: string,
     body?: any
   ): Promise<T> {
-    const url = new URL(`${this.baseUrl}${path}`);
-    const isHttps = url.protocol === "https:";
-    const transport = isHttps ? https : http;
+    const url = `${this.baseUrl}${path}`;
 
-    const options: https.RequestOptions = {
-      hostname: url.hostname,
-      port: url.port || (isHttps ? 443 : 80),
-      path: url.pathname + url.search,
-      method,
-      headers: {
-        "Content-Type": "application/json",
-        "x-api-key": this.apiKey,
-      },
-      // Allow self-signed certs (common for self-hosted Dokploy)
-      rejectUnauthorized: false,
-    };
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 30000);
 
-    return new Promise((resolve, reject) => {
-      const req = transport.request(options, (res) => {
-        let data = "";
-        res.on("data", (chunk) => (data += chunk));
-        res.on("end", () => {
-          try {
-            if (res.statusCode && res.statusCode >= 400) {
-              const errorBody = data ? JSON.parse(data) : {};
-              reject(
-                new Error(
-                  errorBody.message ||
-                    errorBody.error ||
-                    `HTTP ${res.statusCode}: ${res.statusMessage}`
-                )
-              );
-              return;
-            }
-            const parsed = data ? JSON.parse(data) : {};
-            resolve(parsed as T);
-          } catch (e) {
-            reject(new Error(`Failed to parse response: ${data}`));
-          }
-        });
+    try {
+      const res = await fetch(url, {
+        method,
+        headers: {
+          "Content-Type": "application/json",
+          "x-api-key": this.apiKey,
+        },
+        body: body ? JSON.stringify(body) : undefined,
+        signal: controller.signal,
       });
 
-      req.on("error", reject);
-      req.setTimeout(30000, () => {
-        req.destroy();
-        reject(new Error("Request timed out"));
-      });
+      const data = await res.text();
 
-      if (body) {
-        req.write(JSON.stringify(body));
+      if (!res.ok) {
+        let message = `HTTP ${res.status}: ${res.statusText}`;
+        try {
+          const errorBody = data ? JSON.parse(data) : {};
+          message = errorBody.message || errorBody.error || message;
+        } catch {}
+        throw new Error(message);
       }
-      req.end();
-    });
+
+      return (data ? JSON.parse(data) : {}) as T;
+    } catch (e: any) {
+      if (e.name === "AbortError") {
+        throw new Error("Request timed out");
+      }
+      throw e;
+    } finally {
+      clearTimeout(timeout);
+    }
   }
 
   // ── Auth / Test Connection ──────────────────────────────────────────

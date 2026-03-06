@@ -211,7 +211,7 @@ export class DashboardPanel {
             <td class="muted">${lastDeployStr}</td>
             <td class="actions">
               <button onclick="sendMsg('deploy', '${app.applicationId}')" title="Deploy">▶ Deploy</button>
-              <button onclick="sendMsg('redeploy', '${app.applicationId}')" title="Redeploy">↻</button>
+              <button onclick="sendMsg('redeploy', '${app.applicationId}')" title="Redeploy"><span style="font-size:11px">↻</span></button>
               ${
                 status === "running" || status === "done"
                   ? `<button onclick="sendMsg('stop', '${app.applicationId}')" title="Stop">⏹</button>`
@@ -307,7 +307,7 @@ export class DashboardPanel {
     </div>
     <div>
       <button onclick="sendMsg('openExternal', '', '${serverUrl}')">Open Web Dashboard</button>
-      <button onclick="sendMsg('refresh')">↻ Refresh</button>
+      <button onclick="sendMsg('refresh')"><span style="font-size:11px">↻</span> Refresh</button>
     </div>
   </div>
 

@@ -1,6 +1,6 @@
 # Cloud Hosting Deploy & Manage by MassiveGRID
 
-Deploy your code to MassiveGRID servers directly from VS Code. Create services, manage deployments, view logs, and configure domains — all without leaving your editor.
+Deploy your code to MassiveGRID servers directly from VS Code and [vscode.dev](https://vscode.dev). Create services, manage deployments, view logs, and configure domains — all without leaving your editor.
 
 ## Features
 
@@ -14,16 +14,17 @@ Deploy your code to MassiveGRID servers directly from VS Code. Create services, 
 - **Domain Management** — Configure custom domains with SSL/TLS support
 - **Real-Time Logs** — Stream deployment and application logs directly in VS Code
 - **Templates Marketplace** — Browse and deploy pre-built application templates
+- **VS Code Web Support** — Works in [vscode.dev](https://vscode.dev) and GitHub Codespaces
 
 ## Screenshots
 
-![Screenshot 1](assets/Screenshot%202026-03-05%20at%2015.48.06.png)
-![Screenshot 2](assets/Screenshot%202026-03-05%20at%2015.48.26.png)
-![Screenshot 3](assets/Screenshot%202026-03-05%20at%2015.48.52.png)
-![Screenshot 4](assets/Screenshot%202026-03-05%20at%2015.49.22.png)
-![Screenshot 5](assets/Screenshot%202026-03-05%20at%2015.50.48.png)
-![Screenshot 6](assets/Screenshot%202026-03-05%20at%2015.51.06.png)
-![Screenshot 7](assets/Screenshot%202026-03-05%20at%2015.51.34.png)
+![Screenshot 1](https://raw.githubusercontent.com/MassiveGRID/dokploy-vscode/main/assets/Screenshot%202026-03-05%20at%2015.48.06.png)
+![Screenshot 2](https://raw.githubusercontent.com/MassiveGRID/dokploy-vscode/main/assets/Screenshot%202026-03-05%20at%2015.48.26.png)
+![Screenshot 3](https://raw.githubusercontent.com/MassiveGRID/dokploy-vscode/main/assets/Screenshot%202026-03-05%20at%2015.48.52.png)
+![Screenshot 4](https://raw.githubusercontent.com/MassiveGRID/dokploy-vscode/main/assets/Screenshot%202026-03-05%20at%2015.49.22.png)
+![Screenshot 5](https://raw.githubusercontent.com/MassiveGRID/dokploy-vscode/main/assets/Screenshot%202026-03-05%20at%2015.50.48.png)
+![Screenshot 6](https://raw.githubusercontent.com/MassiveGRID/dokploy-vscode/main/assets/Screenshot%202026-03-05%20at%2015.51.06.png)
+![Screenshot 7](https://raw.githubusercontent.com/MassiveGRID/dokploy-vscode/main/assets/Screenshot%202026-03-05%20at%2015.51.34.png)
 
 ## Getting Started
 
@@ -31,7 +32,7 @@ Deploy your code to MassiveGRID servers directly from VS Code. Create services, 
 
 1. Open VS Code
 2. Go to Extensions (`Ctrl+Shift+X` / `Cmd+Shift+X`)
-3. Search for **"MassiveGRID Autodeploy"**
+3. Search for **"Cloud Hosting Deploy & Manage by MassiveGRID"**
 4. Click **Install**
 
 ### Connect Your Server
@@ -84,12 +85,14 @@ Click any application to open its full detail panel with 10 tabs:
 - **Monitoring** — CPU, memory, and network metrics
 - **Advanced** — Replicas, resource limits, Traefik config
 
-## ⚠️ Requirements
+## Requirements
 
-> **Important**: Ensure you have the following prerequisites:
+- **VS Code 1.109.0 or higher** — Required for full compatibility
+- **A [MassiveGRID Cloud Server](https://portal.massivegrid.com/index.php/store/ha-cloud-servers/2025-ha-cloud-vps-in-new-york)** with API access enabled
 
-- **VS Code 1.109.0 or higher** - Required for full compatibility
-- **A [MassiveGRID](https://portal.massivegrid.com/index.php/store/ha-cloud-servers/2025-ha-cloud-vps-in-new-york?configoption%5B3233%5D=8025548&configoption%5B3241%5D=2&configoption%5B3237%5D=4&configoption%5B3238%5D=96) server** with API access enabled
+## VS Code Web
+
+This extension works in [vscode.dev](https://vscode.dev) and GitHub Codespaces. Core features like project browsing, deployments, logs, environment variables, domains, and monitoring are fully supported in the browser. Features that require local file system access (Push & Deploy, .env file sync) are available only in the desktop version.
 
 ## Extension Settings
 
